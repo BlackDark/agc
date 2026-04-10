@@ -1,0 +1,9 @@
+# One-shot claim run then stop the container (custom_startup sends SIGTERM to PID 1 after entrypoint exits).
+# Usage: docker compose -f compose.yml -f compose.once.yml up --build
+#        (use compose.dev.yml instead of compose.yml for HTTP UI if needed)
+#
+services:
+  agc:
+    environment:
+      RUN_MODE: once
+    restart: "no"

@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git init:*)",
+      "Bash(git add:*)",
+      "Bash(git -c user.email=local@local -c user.name=local commit -q -m \"chore: initial scaffold + design + plan\")",
+      "Bash(bun add:*)",
+      "Bash(bun run:*)",
+      "Bash(git:*)",
+      "Bash(echo \"Exit code: $?\")",
+      "Bash(echo \"Typecheck exit code: $?\")",
+      "Bash(bun test:*)",
+      "Bash(bunx playwright:*)",
+      "Bash(docker --version)",
+      "Bash(docker info:*)",
+      "Bash(docker stop:*)",
+      "Bash(docker build:*)",
+      "Bash(docker run:*)",
+      "Bash(echo \"exit=$?\")",
+      "Bash(docker pull:*)",
+      "Bash(docker rm:*)",
+      "Bash(docker exec:*)",
+      "Bash(wc -l src/*.ts src/sites/*.ts test/*.ts test/sites/*.ts)",
+      "Bash(gh api:*)",
+      "Bash(bunx tsc:*)"
+    ]
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "data": {
+    "Catalog": {
+      "searchStore": {
+        "elements": [
+          {
+            "title": "Sample Free Game",
+            "id": "offer-id-1",
+            "namespace": "ns-1",
+            "offerType": "BASE_GAME",
+            "urlSlug": "sample-game",
+            "catalogNs": {
+              "mappings": [{ "pageSlug": "sample-game-abc" }]
+            },
+            "price": {
+              "totalPrice": { "discountPrice": 0 }
+            },
+            "promotions": {
+              "promotionalOffers": [
+                {
+                  "promotionalOffers": [
+                    {
+                      "startDate": "2020-01-01T00:00:00.000Z",
+                      "endDate": "2030-01-01T00:00:00.000Z"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "title": "Not Free",
+            "id": "x",
+            "namespace": "y",
+            "price": { "totalPrice": { "discountPrice": 999 } },
+            "promotions": {
+              "promotionalOffers": [
+                {
+                  "promotionalOffers": [
+                    {
+                      "startDate": "2020-01-01T00:00:00.000Z",
+                      "endDate": "2030-01-01T00:00:00.000Z"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  }
+}

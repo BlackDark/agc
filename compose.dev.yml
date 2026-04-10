@@ -1,0 +1,30 @@
+# Plain HTTP Kasm UI on :6901 (no TLS, no Basic Auth). For local / automation browsers that block self-signed HTTPS.
+# Build: docker compose -f compose.dev.yml up --build
+# Open:  http://localhost:6901  (then Connect)
+# See:   https://github.com/kasmtech/workspaces-core-images/issues/2
+#
+name: agc-dev
+
+services:
+  agc:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      target: dev
+    image: agc:dev-http
+    ports:
+      - "6901:6901"
+    environment:
+      RUN_MODE: schedule
+      CRON_SCHEDULE: "* * * * *"
+      TZ: UTC
+      VNC_PW: password
+      LOG_LEVEL: debug
+    volumes:
+      - ./src:/app/src
+      - ./tsconfig.json:/app/tsconfig.json:ro
+      - claimer-data-dev:/data
+    restart: unless-stopped
+
+volumes:
+  claimer-data-dev: {}

@@ -1,0 +1,31 @@
+# Development stack: build the image and bind-mount sources so ./src edits apply without rebuilding.
+# Rebuild the image after changing package.json / bun.lock (or run `bun install` inside the container).
+#
+#   docker compose up --build
+#   open https://localhost:6901  (user: kasm_user, password: VNC_PW)
+#
+name: agc
+
+services:
+  agc:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      target: production
+    image: agc:dev
+    ports:
+      - "6901:6901"
+    environment:
+      RUN_MODE: schedule
+      CRON_SCHEDULE: "* * * * *"
+      TZ: UTC
+      VNC_PW: password
+      LOG_LEVEL: debug
+    volumes:
+      - ./src:/app/src
+      - ./tsconfig.json:/app/tsconfig.json:ro
+      - claimer-data:/data
+    restart: unless-stopped
+
+volumes:
+  claimer-data: {}
