@@ -1,0 +1,91 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Lint & Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Typecheck
+        run: bun run typecheck
+
+      - name: Install Playwright Chromium
+        run: bunx playwright install --with-deps chromium
+
+      - name: Test
+        run: bun test
+
+  docker:
+    name: Build Docker image
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      # Only log in for push events (main branch or tags). PR builds stay local.
+      - name: Log in to GHCR
+        if: github.event_name == 'push'
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # Tag strategy:
+      #   - push to main  → `dev`
+      #   - push tag v*   → semver tags (v1.2.3 → 1.2.3, 1.2, 1, latest)
+      #   - pull_request  → no tags pushed (push: false below)
+      - name: Extract Docker metadata
+        id: meta
+        uses: docker/metadata-action@v6
+        with:
+          images: ghcr.io/${{ github.repository }}
+          tags: |
+            type=raw,value=dev,enable={{is_default_branch}}
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+
+      - name: Build and push
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          file: docker/Dockerfile
+          target: production
+          platforms: linux/amd64,linux/arm64
+          push: ${{ github.event_name == 'push' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
