@@ -33,6 +33,7 @@ const Schema = z
     CLAIM_ITCH: bool(false),
     CLAIM_UBISOFT: bool(false),
     CLAIM_XBOX: bool(false),
+    CLAIM_ALIEXPRESS: bool(false),
     APPRISE_URLS: z
       .string()
       .optional()
@@ -82,6 +83,7 @@ export type Config = {
     itch: boolean;
     ubisoft: boolean;
     xbox: boolean;
+    aliexpress: boolean;
   };
   appriseUrls: string[];
   notifyOn: Set<"claimed" | "error" | "login_required" | "nothing">;
@@ -105,6 +107,7 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): Config {
       itch: v.CLAIM_ITCH,
       ubisoft: v.CLAIM_UBISOFT,
       xbox: v.CLAIM_XBOX,
+      aliexpress: v.CLAIM_ALIEXPRESS,
     },
     appriseUrls: v.APPRISE_URLS,
     notifyOn: v.NOTIFY_ON,

@@ -18,6 +18,7 @@ All configuration is via environment variables.
 | `CLAIM_ITCH` | `false` | enable itch.io (login detection only — claim flow is a stub) |
 | `CLAIM_UBISOFT` | `false` | enable Ubisoft Connect (login detection only — claim flow is a stub) |
 | `CLAIM_XBOX` | `false` | enable Xbox / Microsoft Store (login detection only — claim flow is a stub) |
+| `CLAIM_ALIEXPRESS` | `false` | enable AliExpress daily coin collection (page is driven as a mobile device) |
 | `VNC_PW` | — | Kasm web UI password — set this to whatever you want to log in with |
 | `APPRISE_URLS` | — | comma-separated Apprise URLs |
 | `NOTIFY_ON` | `claimed,error,login_required` | comma-separated subset of `claimed,error,login_required,nothing` |

@@ -15,6 +15,7 @@ function cfg(overrides: Partial<Config["sites"]>): Config {
       itch: false,
       ubisoft: false,
       xbox: false,
+      aliexpress: false,
       ...overrides,
     },
     appriseUrls: [],
@@ -33,7 +34,15 @@ test("enabledSites returns only the enabled sites, in canonical order", () => {
 
 test("all site flags on → full set", () => {
   const sites = enabledSites(
-    cfg({ epic: true, prime: true, gog: true, itch: true, ubisoft: true, xbox: true }),
+    cfg({ epic: true, prime: true, gog: true, itch: true, ubisoft: true, xbox: true, aliexpress: true }),
   );
-  expect(sites.map((s) => s.name)).toEqual(["epic", "prime", "gog", "itch", "ubisoft", "xbox"]);
+  expect(sites.map((s) => s.name)).toEqual([
+    "epic",
+    "prime",
+    "gog",
+    "itch",
+    "ubisoft",
+    "xbox",
+    "aliexpress",
+  ]);
 });

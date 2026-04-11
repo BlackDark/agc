@@ -15,7 +15,7 @@ export type ClaimResult =
   | { status: "login_required"; perItem?: PerItemClaimResult[] }
   | { status: "error"; error: string; perItem?: PerItemClaimResult[] };
 
-export type SiteName = "epic" | "prime" | "gog" | "itch" | "ubisoft" | "xbox";
+export type SiteName = "epic" | "prime" | "gog" | "itch" | "ubisoft" | "xbox" | "aliexpress";
 
 export interface SiteClaimer {
   name: SiteName;

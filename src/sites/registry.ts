@@ -7,6 +7,7 @@ import { gog } from "./gog.ts";
 import { itch } from "./itch.ts";
 import { ubisoft } from "./ubisoft.ts";
 import { xbox } from "./xbox.ts";
+import { aliexpress } from "./aliexpress.ts";
 
 export function enabledSites(config: Config): SiteClaimer[] {
   const out: SiteClaimer[] = [];
@@ -16,5 +17,6 @@ export function enabledSites(config: Config): SiteClaimer[] {
   if (config.sites.itch) out.push(itch);
   if (config.sites.ubisoft) out.push(ubisoft);
   if (config.sites.xbox) out.push(xbox);
+  if (config.sites.aliexpress) out.push(aliexpress);
   return out;
 }
