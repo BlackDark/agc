@@ -1,7 +1,7 @@
 // test/claimer.test.ts
-import { test, expect } from "bun:test";
+import { expect, test } from "bun:test";
 import { runClaim } from "../src/claimer.ts";
-import type { SiteClaimer, ClaimResult } from "../src/sites/types.ts";
+import type { ClaimResult, SiteClaimer } from "../src/sites/types.ts";
 
 const fakePage = {
   close: async () => {},
@@ -29,10 +29,7 @@ const site = (name: string, result: ClaimResult, loggedIn = true): SiteClaimer =
 });
 
 test("runs each site, aggregates results", async () => {
-  const sites = [
-    site("epic", { status: "claimed", items: ["A"] }),
-    site("gog", { status: "nothing" }),
-  ];
+  const sites = [site("epic", { status: "claimed", items: ["A"] }), site("gog", { status: "nothing" })];
   const out = await runClaim(sites, async () => fakeBrowser);
   expect(out.map((r) => r.name)).toEqual(["epic", "gog"]);
   expect(out[0]!.result.status).toBe("claimed");

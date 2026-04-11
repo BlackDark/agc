@@ -1,10 +1,15 @@
 // test/config.test.ts
-import { test, expect, beforeEach, afterEach } from "bun:test";
-import { loadConfig, ConfigError } from "../src/config.ts";
+import { afterEach, beforeEach, expect, test } from "bun:test";
+import { ConfigError, loadConfig } from "../src/config.ts";
 
 const ORIG = { ...process.env };
-beforeEach(() => { for (const k of Object.keys(process.env)) delete process.env[k]; });
-afterEach(() => { for (const k of Object.keys(process.env)) delete process.env[k]; Object.assign(process.env, ORIG); });
+beforeEach(() => {
+  for (const k of Object.keys(process.env)) delete process.env[k];
+});
+afterEach(() => {
+  for (const k of Object.keys(process.env)) delete process.env[k];
+  Object.assign(process.env, ORIG);
+});
 
 test("defaults: schedule mode requires CRON_SCHEDULE", () => {
   expect(() => loadConfig()).toThrow(ConfigError);

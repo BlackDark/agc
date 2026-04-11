@@ -86,22 +86,33 @@ async function collectUnclaimedOffers(page: Page): Promise<OfferCard[]> {
 // --- GOG key extraction + redemption ---
 
 async function extractPrimeCode(page: Page): Promise<string | null> {
-  const input = page.locator('input[data-a-target="copy-action"], [data-a-target="copy-action-button"] + input').first();
+  const input = page
+    .locator('input[data-a-target="copy-action"], [data-a-target="copy-action-button"] + input')
+    .first();
   if (await input.count()) {
     const v = await input.inputValue().catch(() => "");
     if (v && /[A-Z0-9]{4,}(-[A-Z0-9]{4,}){2,}/.test(v)) return v.trim();
   }
-  const body = await page.locator("body").innerText().catch(() => "");
+  const body = await page
+    .locator("body")
+    .innerText()
+    .catch(() => "");
   const m = body.match(/\b[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}\b/);
   return m?.[0] ?? null;
 }
 
 async function isGogKeyOffer(page: Page): Promise<boolean> {
-  const text = await page.locator("body").innerText().catch(() => "");
+  const text = await page
+    .locator("body")
+    .innerText()
+    .catch(() => "");
   return /gog\.com/i.test(text);
 }
 
-async function handleGogRedemption(page: Page, base: { title: string; url: string }): Promise<PerItemClaimResult | null> {
+async function handleGogRedemption(
+  page: Page,
+  base: { title: string; url: string },
+): Promise<PerItemClaimResult | null> {
   if (!(await isGogKeyOffer(page))) return null;
 
   const code = await extractPrimeCode(page);

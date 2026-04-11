@@ -1,8 +1,8 @@
-import { test, expect } from "bun:test";
-import { chromium } from "playwright-core";
-import { aliexpress } from "../../src/sites/aliexpress.ts";
+import { expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
+import { chromium } from "playwright-core";
+import { aliexpress } from "../../src/sites/aliexpress.ts";
 
 const fixture = (name: string) =>
   "data:text/html;base64," +

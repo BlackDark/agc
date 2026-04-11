@@ -1,9 +1,9 @@
 // test/sites/epic.test.ts
-import { test, expect } from "bun:test";
-import { chromium } from "playwright-core";
-import { epic } from "../../src/sites/epic.ts";
+import { expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
+import { chromium } from "playwright-core";
+import { epic } from "../../src/sites/epic.ts";
 
 const fixture = (name: string) =>
   "data:text/html;base64," +

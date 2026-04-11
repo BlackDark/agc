@@ -1,12 +1,10 @@
 // test/sites/epic-api.test.ts
-import { test, expect } from "bun:test";
-import { parseFreeGamesPromotionsPayload } from "../../src/sites/epic-api.ts";
+import { expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
+import { parseFreeGamesPromotionsPayload } from "../../src/sites/epic-api.ts";
 
-const sample = JSON.parse(
-  readFileSync(join(import.meta.dir, "fixtures", "epic-promotions-sample.json"), "utf8"),
-);
+const sample = JSON.parse(readFileSync(join(import.meta.dir, "fixtures", "epic-promotions-sample.json"), "utf8"));
 
 test("parseFreeGamesPromotionsPayload extracts $0 offers in active window", () => {
   const now = new Date("2025-06-01T12:00:00.000Z");

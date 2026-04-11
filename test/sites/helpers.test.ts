@@ -2,11 +2,12 @@ import { expect, test } from "bun:test";
 import { aggregatePerItemResults } from "../../src/sites/helpers.ts";
 import type { PerItemClaimResult } from "../../src/sites/types.ts";
 
-const make = (
-  title: string,
-  outcome: PerItemClaimResult["outcome"],
-  detail?: string,
-): PerItemClaimResult => ({ title, url: `https://example.com/${title}`, outcome, detail });
+const make = (title: string, outcome: PerItemClaimResult["outcome"], detail?: string): PerItemClaimResult => ({
+  title,
+  url: `https://example.com/${title}`,
+  outcome,
+  detail,
+});
 
 test("empty list → nothing", () => {
   expect(aggregatePerItemResults([])).toEqual({ status: "nothing" });
@@ -35,10 +36,7 @@ test("all already_owned → nothing (with perItem)", () => {
 });
 
 test("only failures → error with joined detail", () => {
-  const result = aggregatePerItemResults([
-    make("A", "failed", "boom"),
-    make("B", "failed"),
-  ]);
+  const result = aggregatePerItemResults([make("A", "failed", "boom"), make("B", "failed")]);
   expect(result.status).toBe("error");
   if (result.status === "error") {
     expect(result.error).toBe("A: boom; B: failed");
@@ -47,9 +45,6 @@ test("only failures → error with joined detail", () => {
 });
 
 test("mix of already_owned + failed → error", () => {
-  const result = aggregatePerItemResults([
-    make("A", "already_owned"),
-    make("B", "failed", "bad"),
-  ]);
+  const result = aggregatePerItemResults([make("A", "already_owned"), make("B", "failed", "bad")]);
   expect(result.status).toBe("error");
 });

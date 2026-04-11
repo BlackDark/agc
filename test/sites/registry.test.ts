@@ -1,6 +1,6 @@
 import { expect, test } from "bun:test";
-import { enabledSites } from "../../src/sites/registry.ts";
 import type { Config } from "../../src/config.ts";
+import { enabledSites } from "../../src/sites/registry.ts";
 
 function cfg(overrides: Partial<Config["sites"]>): Config {
   return {
@@ -36,13 +36,5 @@ test("all site flags on → full set", () => {
   const sites = enabledSites(
     cfg({ epic: true, prime: true, gog: true, itch: true, ubisoft: true, xbox: true, aliexpress: true }),
   );
-  expect(sites.map((s) => s.name)).toEqual([
-    "epic",
-    "prime",
-    "gog",
-    "itch",
-    "ubisoft",
-    "xbox",
-    "aliexpress",
-  ]);
+  expect(sites.map((s) => s.name)).toEqual(["epic", "prime", "gog", "itch", "ubisoft", "xbox", "aliexpress"]);
 });

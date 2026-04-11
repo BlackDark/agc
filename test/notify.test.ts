@@ -1,4 +1,4 @@
-import { test, expect } from "bun:test";
+import { expect, test } from "bun:test";
 import { buildBody, shouldNotify } from "../src/notify.ts";
 import type { ClaimResult } from "../src/sites/types.ts";
 
@@ -13,9 +13,7 @@ test("shouldNotify true when any result matches filter", () => {
 
 test("shouldNotify false when nothing matches filter", () => {
   const filter = new Set(["claimed"] as const);
-  const results: Array<{ name: string; result: ClaimResult }> = [
-    { name: "epic", result: { status: "nothing" } },
-  ];
+  const results: Array<{ name: string; result: ClaimResult }> = [{ name: "epic", result: { status: "nothing" } }];
   expect(shouldNotify(results, filter)).toBe(false);
 });
 

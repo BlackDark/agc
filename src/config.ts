@@ -67,7 +67,11 @@ const Schema = z
   })
   .superRefine((v, ctx) => {
     if (v.RUN_MODE === "schedule" && !v.CRON_SCHEDULE) {
-      ctx.addIssue({ code: "custom", path: ["CRON_SCHEDULE"], message: "CRON_SCHEDULE is required when RUN_MODE=schedule" });
+      ctx.addIssue({
+        code: "custom",
+        path: ["CRON_SCHEDULE"],
+        message: "CRON_SCHEDULE is required when RUN_MODE=schedule",
+      });
     }
   });
 

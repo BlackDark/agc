@@ -14,9 +14,7 @@ export const ubisoft: SiteClaimer = {
 
   async isLoggedIn(page: Page): Promise<boolean> {
     // Positive signal: account menu button in the header.
-    const account = await page
-      .locator('[data-testid="header-account-button"], [aria-label*="Account" i]')
-      .count();
+    const account = await page.locator('[data-testid="header-account-button"], [aria-label*="Account" i]').count();
     if (account > 0) return true;
     // Fallback: Sign in link present.
     const signIn = await page.locator('a:has-text("Sign in"), a:has-text("Log in")').count();

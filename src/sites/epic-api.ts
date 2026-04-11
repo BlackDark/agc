@@ -58,8 +58,8 @@ function isActiveFreeNow(e: RawElement, now: Date): boolean {
     const offers = group.promotionalOffers;
     if (!offers?.length) continue;
     for (const o of offers) {
-      const start = o.startDate ? Date.parse(o.startDate) : NaN;
-      const end = o.endDate ? Date.parse(o.endDate) : NaN;
+      const start = o.startDate ? Date.parse(o.startDate) : Number.NaN;
+      const end = o.endDate ? Date.parse(o.endDate) : Number.NaN;
       if (Number.isNaN(start) || Number.isNaN(end)) continue;
       if (now.getTime() >= start && now.getTime() <= end) return true;
     }
@@ -110,7 +110,7 @@ export async function fetchWeeklyFreeOffers(options?: {
   const allow = options?.allowCountries ?? country;
   const fetchFn = options?.fetchFn ?? fetch;
   const url =
-    `https://store-site-backend-static.ak.epicgames.com/freeGamesPromotions` +
+    "https://store-site-backend-static.ak.epicgames.com/freeGamesPromotions" +
     `?locale=${encodeURIComponent(locale)}` +
     `&country=${encodeURIComponent(country)}` +
     `&allowCountries=${encodeURIComponent(allow)}`;

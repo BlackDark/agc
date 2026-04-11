@@ -1,9 +1,9 @@
 // test/sites/gog.test.ts
-import { test, expect } from "bun:test";
-import { chromium } from "playwright-core";
-import { gog } from "../../src/sites/gog.ts";
+import { expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
+import { chromium } from "playwright-core";
+import { gog } from "../../src/sites/gog.ts";
 
 const fixture = (name: string) =>
   "data:text/html;base64," +

@@ -5,12 +5,7 @@
 import type { Page } from "playwright-core";
 import { logger } from "../logger.ts";
 import { fetchWeeklyFreeOffers } from "./epic-api.ts";
-import {
-  aggregatePerItemResults,
-  clickOptional,
-  dismissCookieBanner,
-  LoginRequiredError,
-} from "./helpers.ts";
+import { aggregatePerItemResults, clickOptional, dismissCookieBanner, LoginRequiredError } from "./helpers.ts";
 import type { ClaimResult, PerItemClaimResult, SiteClaimer } from "./types.ts";
 
 /** Navigation and Playwright action timeouts (ms). */
@@ -63,8 +58,16 @@ async function continueThroughUnsupportedOrPlatformSteps(page: Page): Promise<vo
     if (await platformStepBtn.isVisible().catch(() => false)) {
       await platformStepBtn.click({ timeout: EPIC_TIMEOUTS.postClick });
       advanced = true;
-    } else if (await unsupportedHeading.first().isVisible().catch(() => false)) {
-      await page.getByRole("button", { name: /^continue$/i }).first().click({ timeout: EPIC_TIMEOUTS.postClick });
+    } else if (
+      await unsupportedHeading
+        .first()
+        .isVisible()
+        .catch(() => false)
+    ) {
+      await page
+        .getByRole("button", { name: /^continue$/i })
+        .first()
+        .click({ timeout: EPIC_TIMEOUTS.postClick });
       advanced = true;
     }
     if (!advanced) break;
@@ -107,7 +110,10 @@ async function completeCheckoutInIframe(page: Page): Promise<void> {
     if (containerHidden) break;
   }
 
-  await page.locator(".webPurchaseContainer").first().waitFor({ state: "hidden", timeout: EPIC_TIMEOUTS.checkoutSuccess });
+  await page
+    .locator(".webPurchaseContainer")
+    .first()
+    .waitFor({ state: "hidden", timeout: EPIC_TIMEOUTS.checkoutSuccess });
 }
 
 /** Reload product page and require CTA to read "In Library" (order completed). */

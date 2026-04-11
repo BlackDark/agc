@@ -1,14 +1,14 @@
-import { loadConfig, ConfigError } from "./config.ts";
-import { logger } from "./logger.ts";
 import { cdpProvider } from "./claimer.ts";
-import { enabledSites } from "./sites/registry.ts";
+import { type Config, ConfigError, loadConfig } from "./config.ts";
+import { logger } from "./logger.ts";
 import { sendNotification } from "./notify.ts";
 import { runOnce, startSchedule } from "./scheduler.ts";
+import { enabledSites } from "./sites/registry.ts";
 
 const CDP_URL = process.env.CDP_URL ?? "http://localhost:9223";
 
 async function main() {
-  let config;
+  let config: Config;
   try {
     config = loadConfig();
   } catch (err) {

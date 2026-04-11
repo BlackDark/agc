@@ -75,12 +75,18 @@ async function gotoCoinPage(page: Page): Promise<void> {
 
 export async function aliIsLoggedIn(page: Page): Promise<boolean> {
   // Logged-out marker: the coin page swaps its root for `.login-page-container` with a "Log in" button.
-  const loginContainer = await page.locator(".login-page-container").count().catch(() => 0);
+  const loginContainer = await page
+    .locator(".login-page-container")
+    .count()
+    .catch(() => 0);
   if (loginContainer > 0) return false;
   // Alternative: if the login flow has already redirected us away, URL will be on login.aliexpress.com.
   if (/login\.aliexpress\.com/.test(page.url())) return false;
   // Positive signal: coin page's primary CTA exists.
-  const signBtn = await page.locator("#signButton").count().catch(() => 0);
+  const signBtn = await page
+    .locator("#signButton")
+    .count()
+    .catch(() => 0);
   return signBtn > 0;
 }
 

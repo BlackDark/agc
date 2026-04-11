@@ -1,6 +1,6 @@
 import { Cron } from "croner";
+import { type BrowserProvider, runClaim } from "./claimer.ts";
 import { logger } from "./logger.ts";
-import { runClaim, type BrowserProvider } from "./claimer.ts";
 import type { RunResult } from "./notify.ts";
 import type { SiteClaimer } from "./sites/types.ts";
 
@@ -37,11 +37,7 @@ export async function runOnce(deps: SchedulerDeps): Promise<RunResult[]> {
   return results;
 }
 
-export function startSchedule(
-  deps: SchedulerDeps,
-  cronExpr: string,
-  tz: string,
-): Cron {
+export function startSchedule(deps: SchedulerDeps, cronExpr: string, tz: string): Cron {
   logger.info({ cronExpr, tz }, "scheduler started");
   return new Cron(cronExpr, { timezone: tz, protect: true }, async () => {
     await runOnce(deps);

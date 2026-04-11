@@ -53,9 +53,7 @@ export const gog: SiteClaimer = {
       }
 
       // Giveaway banner locators (GOG has changed these several times).
-      const banner = page
-        .locator('.giveaway, giveaway-banner, [href*="giveaway"]')
-        .first();
+      const banner = page.locator('.giveaway, giveaway-banner, [href*="giveaway"]').first();
       const hasBanner = await banner
         .waitFor({ state: "visible", timeout: GOG_TIMEOUTS.bannerVisible })
         .then(() => true)
@@ -68,13 +66,18 @@ export const gog: SiteClaimer = {
 
       // Title is usually inside `.giveaway__overlay-wrapper` or the banner's alt text.
       const title =
-        (await page.locator(".giveaway__title, giveaway-banner h1").first().innerText().catch(() => "")).trim() ||
-        "GOG giveaway";
+        (
+          await page
+            .locator(".giveaway__title, giveaway-banner h1")
+            .first()
+            .innerText()
+            .catch(() => "")
+        ).trim() || "GOG giveaway";
 
       // "Claimed" / "Yes, and claim the game" button.
-      const claimBtn = page.locator(
-        '.giveaway__button, button:has-text("Claim it"), button:has-text("Yes, and claim")',
-      ).first();
+      const claimBtn = page
+        .locator('.giveaway__button, button:has-text("Claim it"), button:has-text("Yes, and claim")')
+        .first();
 
       if (!(await claimBtn.isVisible().catch(() => false))) {
         logger.info({ title }, "gog: giveaway banner present but no claim button (likely already owned)");

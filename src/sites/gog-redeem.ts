@@ -65,10 +65,7 @@ async function classifyFromResponses(page: Page): Promise<() => ClassifiedReason
   return () => reason;
 }
 
-export async function redeemGogCode(
-  context: BrowserContext,
-  code: string,
-): Promise<RedeemOutcome> {
+export async function redeemGogCode(context: BrowserContext, code: string): Promise<RedeemOutcome> {
   const page = await context.newPage();
   try {
     const getReason = await classifyFromResponses(page);
@@ -84,9 +81,7 @@ export async function redeemGogCode(
     }
 
     // Step 1: Continue (validates the code).
-    const continueBtn = page
-      .locator('button[type="submit"].button.primary:has-text("Continue")')
-      .first();
+    const continueBtn = page.locator('button[type="submit"].button.primary:has-text("Continue")').first();
     try {
       await continueBtn.waitFor({ state: "visible", timeout: REDEEM_TIMEOUTS.buttonVisible });
       await continueBtn.click();
@@ -108,9 +103,7 @@ export async function redeemGogCode(
     if (classified === "code_not_found") return { status: "code_not_found" };
 
     // Step 2: Redeem.
-    const redeemBtn = page
-      .locator('button[type="submit"].button.primary:has-text("Redeem")')
-      .first();
+    const redeemBtn = page.locator('button[type="submit"].button.primary:has-text("Redeem")').first();
     await redeemBtn.waitFor({ state: "visible", timeout: REDEEM_TIMEOUTS.buttonVisible });
     await redeemBtn.click();
     await page.waitForTimeout(2_000);
@@ -120,7 +113,7 @@ export async function redeemGogCode(
     if (afterRedeem === "code_used") return { status: "already_used" };
 
     try {
-      await page.waitForSelector(".success-message, h1:has-text(\"Code redeemed successfully!\")", {
+      await page.waitForSelector('.success-message, h1:has-text("Code redeemed successfully!")', {
         state: "visible",
         timeout: REDEEM_TIMEOUTS.buttonVisible,
       });

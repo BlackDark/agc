@@ -1,13 +1,13 @@
 // src/sites/registry.ts
 import type { Config } from "../config.ts";
-import type { SiteClaimer } from "./types.ts";
+import { aliexpress } from "./aliexpress.ts";
 import { epic } from "./epic.ts";
-import { prime } from "./prime.ts";
 import { gog } from "./gog.ts";
 import { itch } from "./itch.ts";
+import { prime } from "./prime.ts";
+import type { SiteClaimer } from "./types.ts";
 import { ubisoft } from "./ubisoft.ts";
 import { xbox } from "./xbox.ts";
-import { aliexpress } from "./aliexpress.ts";
 
 export function enabledSites(config: Config): SiteClaimer[] {
   const out: SiteClaimer[] = [];

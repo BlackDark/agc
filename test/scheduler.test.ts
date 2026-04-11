@@ -1,6 +1,6 @@
-import { test, expect } from "bun:test";
-import { runOnce } from "../src/scheduler.ts";
+import { expect, test } from "bun:test";
 import type { RunResult } from "../src/notify.ts";
+import { runOnce } from "../src/scheduler.ts";
 
 test("runOnce wires claimer → notify and returns results", async () => {
   const sent: RunResult[][] = [];

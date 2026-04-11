@@ -24,9 +24,7 @@ export const cdpProvider =
   };
 
 /** Prefer the existing window/session (VNC-visible). `newContext()` is a separate profile — often invisible. */
-async function sharedOrNewContext(
-  browser: Browser,
-): Promise<{ ctx: BrowserContext; closeWhenDone: boolean }> {
+async function sharedOrNewContext(browser: Browser): Promise<{ ctx: BrowserContext; closeWhenDone: boolean }> {
   const existing = browser.contexts();
   if (existing.length > 0) {
     logger.debug({ contexts: existing.length }, "cdp: reusing existing browser context (visible session)");
@@ -82,10 +80,7 @@ async function runOneSite(site: SiteClaimer, page: Page): Promise<RunResult> {
   }
 }
 
-export async function runClaim(
-  sites: SiteClaimer[],
-  provider: BrowserProvider,
-): Promise<RunResult[]> {
+export async function runClaim(sites: SiteClaimer[], provider: BrowserProvider): Promise<RunResult[]> {
   const browser = await provider();
   try {
     const { ctx, closeWhenDone: closeCtx } = await sharedOrNewContext(browser);

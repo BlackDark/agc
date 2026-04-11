@@ -1,7 +1,7 @@
 import { expect, test } from "bun:test";
-import { chromium } from "playwright-core";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
+import { chromium } from "playwright-core";
 import { xbox } from "../../src/sites/xbox.ts";
 
 const fixture = (name: string) =>

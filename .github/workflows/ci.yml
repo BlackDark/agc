@@ -27,9 +27,16 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
+      - name: Lint (Biome)
+        run: bun run lint
+
       - name: Typecheck
         run: bun run typecheck
 
+      # Use the locally-installed `playwright` devDep (pinned to the same version as
+      # `playwright-core`) so the downloaded Chromium revision matches exactly. Using
+      # a floating `bunx playwright` instead would fetch latest playwright and crash
+      # `browser.launch()` at test time with ENOENT on a mismatched revision directory.
       - name: Install Playwright Chromium
         run: bunx playwright install --with-deps chromium
 
