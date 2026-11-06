@@ -1,3 +1,5 @@
+> This repository is archived.
+
 # agc — another games claimer
 
 Bundled [Kasm Workspaces Chromium](https://github.com/kasmtech/workspaces-images) + Playwright claimer that visits Epic Games, Amazon Prime Gaming, and GOG to claim free items on a schedule. Log in once from any device via the Kasm web UI (HTTPS over a single TCP port — works behind any reverse proxy / Cloudflare tunnel / Tailscale node); the browser profile persists on a mounted volume.
